@@ -1,0 +1,125 @@
+body {
+    font-family: sans-serif;
+    background-color: #f5f5f5;
+}
+
+#main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 30px;
+}
+
+#title {
+    display: flex;
+    justify-content: center;
+    font-size: 50px;
+    color: #660f0f;
+    font-weight: bold;
+}
+
+#wrapper {
+    display: flex;
+    flex-direction: column;
+}
+
+#inputContainer {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+#inp {
+    /*width: 60%;*/
+    font-size: 24px;
+    padding: 14px 30px;
+    border-radius: 20px 0 0 20px;
+    border: none;
+    border: 1px solid #A9A9A9;
+    outline: none;
+    box-shadow: 1px 1px 12px 4px grey;
+}
+
+#btnAdd {
+    font-size: 24px;
+    padding: 15px;
+    border: none;
+    border-radius: 0 20px 20px 0;
+    box-shadow: 9px 1px 12px 4px grey;
+    outline: none;
+    background-color: #a36f6f;
+    color: white;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+#btnAdd:hover {
+    background-color: #5b0d0d;
+}
+
+#content {
+    display: flex;
+    justify-content: center;
+}
+
+#list {
+    width: 100%;
+    display: none;
+    border: 1px solid #c19f9f;
+    border-top: none;
+    background-color: white;
+    padding: 10px 0;
+    margin-top: 5px;
+}
+
+ul {
+    list-style-type: none;
+    padding-inline-start: 0;
+}
+
+.li {
+    font-size: 24px;
+}
+
+.liDiv {
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #A9A9A9;
+    padding: 5px 10px;
+    position: relative;
+    word-break: break-all;
+}
+
+.liDiv:hover > .btnClose {
+    display: block;
+}
+
+.checkBox {
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+}
+
+.spanText {
+    margin-left: 10px;
+    cursor: pointer;
+}
+
+.btnClose {
+    display: none;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-weight: bold;
+    color: #b28787;
+    background: transparent;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    outline: none;
+}
+
+.btnClose:hover {
+    color: #e50000;
+    font-size: 24px;
+}

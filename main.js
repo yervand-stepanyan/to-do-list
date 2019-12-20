@@ -2,6 +2,12 @@ const input = document.querySelector('input');
 const button = document.querySelector('button');
 const list = document.querySelector('#list');
 const ul = document.querySelector('ul');
+const item = document.querySelector('#item');
+let listItems = {
+    active: [],
+    completed: []
+};
+let activeItemsCount = 0;
 
 button.addEventListener("click", () => {
     add();
@@ -14,6 +20,15 @@ input.addEventListener("keypress", event => {
 
 function add() {
     const inputValue = input.value;
+
+    if (inputValue === "") {
+        return;
+    }
+
+    listItems.active.push(inputValue);
+    activeItemsCount = listItems.active.length;
+
+    showItemsLeft(activeItemsCount, item);
 
     const li = createElement("li", ['li']);
     const liDiv = createElement("div", ['liDiv']);
@@ -30,10 +45,21 @@ function add() {
     li.appendChild(liDiv);
     ul.appendChild(li);
 
-
     list.style.display = "block";
 
     buttonX.addEventListener("click", (event) => {
+        // const removedValue = event.target.closest('li').innerText.slice(0, -1);
+        // // console.log(listItems.active);
+        // // listItems.active = listItems.active.filter(item => item !== liValue);
+        // console.log(removedValue);
+        // console.log(listItems.active);
+        // const newArr = listItems['active'].filter(item => item === removedValue);
+        // console.log(newArr);
+
+
+        activeItemsCount -= 1;
+
+        showItemsLeft(activeItemsCount, item);
         ul.removeChild(event.target.closest('li'));
 
         if (!ul.hasChildNodes()) {
@@ -44,7 +70,6 @@ function add() {
 
     text.addEventListener("click", () => {
         if (text.style.textDecoration === "") {
-            // text.style.transition = "0.5s";
             text.style.textDecoration = "line-through";
             text.style.color = "#cccccc";
             checkBox.checked = true;
@@ -58,7 +83,6 @@ function add() {
     checkBox.addEventListener("change", (event) => {
         if (event.target.checked) {
             text.style.textDecoration = "line-through";
-            // text.style.transition = "0.5s";
             text.style.color = "#cccccc";
         } else {
             text.style.textDecoration = "";
@@ -75,5 +99,19 @@ function createElement(tagName, classList = []) {
     element.classList.add(...classList);
 
     return element;
+}
+
+function clearElement(element) {
+    while (element.firstChild) {
+        element.removeChild(element.firstChild);
+    }
+}
+
+function showItemsLeft(arrayLength, element) {
+    clearElement(element);
+    const itemLeft = createElement("span", ['itemLeftSpan']);
+    itemLeft.textContent = (arrayLength > 1) ? `${arrayLength} items left` :
+        `${arrayLength} item left`;
+    item.appendChild(itemLeft);
 }
 

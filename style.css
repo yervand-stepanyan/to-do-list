@@ -90,6 +90,8 @@ body {
     background-color: white;
     padding: 10px 0;
     margin-top: 5px;
+    box-sizing: border-box;
+    border-radius: 10px;
 }
 
 ul {
@@ -143,4 +145,52 @@ ul {
 .btnClose:hover {
     color: #e50000;
     font-size: 24px;
+}
+
+#footer {
+    box-sizing: border-box;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 0 10px;
+}
+
+#item {
+    width: 20%;
+    color: gray;
+}
+
+#footerButtons {
+    display: flex;
+    justify-content: space-around;
+    width: 30%;
+}
+
+.navButton {
+    padding: 5px;
+}
+
+.navButton:hover {
+    cursor: pointer;
+    border: 1px solid gray;
+    border-radius: 5px;
+}
+
+#clear {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 20%;
+}
+
+#clear:hover {
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+@media screen and (min-width: 768px) {
+    #wrapper {
+        width: 70%;
+    }
 }

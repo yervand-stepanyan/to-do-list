@@ -44,6 +44,7 @@ function add() {
 
     text.addEventListener("click", () => {
         if (text.style.textDecoration === "") {
+            // text.style.transition = "0.5s";
             text.style.textDecoration = "line-through";
             text.style.color = "#cccccc";
             checkBox.checked = true;
@@ -57,6 +58,7 @@ function add() {
     checkBox.addEventListener("change", (event) => {
         if (event.target.checked) {
             text.style.textDecoration = "line-through";
+            // text.style.transition = "0.5s";
             text.style.color = "#cccccc";
         } else {
             text.style.textDecoration = "";

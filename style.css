@@ -16,21 +16,36 @@ body {
     font-size: 50px;
     color: #660f0f;
     font-weight: bold;
+    text-align: center;
 }
 
 #wrapper {
     display: flex;
     flex-direction: column;
+    width: 100%;
+}
+
+@media screen and (min-width: 768px) {
+    #wrapper {
+        width: 70%;
+    }
 }
 
 #inputContainer {
     display: flex;
     justify-content: center;
     margin-top: 20px;
+    width: 100%;
+}
+
+#input {
+    width: 80%;
+
 }
 
 #inp {
-    /*width: 60%;*/
+    box-sizing: border-box;
+    width: 100%;
     font-size: 24px;
     padding: 14px 30px;
     border-radius: 20px 0 0 20px;
@@ -40,9 +55,12 @@ body {
     box-shadow: 1px 1px 12px 4px grey;
 }
 
+#btn {
+    width: 20%;
+}
+
 #btnAdd {
-    font-size: 24px;
-    padding: 15px;
+    font-size: 18px;
     border: none;
     border-radius: 0 20px 20px 0;
     box-shadow: 9px 1px 12px 4px grey;
@@ -51,6 +69,8 @@ body {
     color: white;
     cursor: pointer;
     font-weight: bold;
+    height: 100%;
+    width: 100%;
 }
 
 #btnAdd:hover {
@@ -103,6 +123,7 @@ ul {
 .spanText {
     margin-left: 10px;
     cursor: pointer;
+    transition: 0.5s;
 }
 
 .btnClose {

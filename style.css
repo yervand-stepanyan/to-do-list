@@ -168,13 +168,16 @@ ul {
 }
 
 .navButton {
+    cursor: pointer;
     padding: 5px;
+    border: 1px solid #a36f6f;
+    border-radius: 5px;
 }
 
 .navButton:hover {
-    cursor: pointer;
-    border: 1px solid gray;
-    border-radius: 5px;
+    border: 1px solid #a36f6f !important;
+    background-color: #a36f6f !important;
+    color: white !important;
 }
 
 #clear {
@@ -182,6 +185,7 @@ ul {
     justify-content: center;
     align-items: center;
     width: 20%;
+    visibility: hidden;
 }
 
 #clear:hover {

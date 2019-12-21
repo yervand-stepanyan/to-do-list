@@ -369,6 +369,10 @@ function createContent(item) {
             }
         }
     });
+
+    text.addEventListener("dblclick", () => {
+        console.log(text);
+    });
 }
 
 function createElement(tagName, classList = []) {

@@ -117,7 +117,7 @@ ul {
 }
 
 .checkBox {
-    width: 30px;
+    min-width: 30px;
     height: 30px;
     cursor: pointer;
 }
@@ -151,20 +151,35 @@ ul {
     box-sizing: border-box;
     width: 100%;
     display: flex;
-    flex-direction: row;
     justify-content: space-between;
     padding: 0 10px;
+    align-items: center;
+    flex-direction: column;
 }
 
-#item {
-    width: 20%;
+/*#footer {*/
+/*    box-sizing: border-box;*/
+/*    width: 100%;*/
+/*    display: flex;*/
+/*    flex-direction: row;*/
+/*    justify-content: space-between;*/
+/*    padding: 0 10px;*/
+/*    align-items: center;*/
+/*}*/
+
+#itemLeft {
+    display: flex;
+    justify-content: center;
+    width: 28%;
     color: gray;
+    white-space: nowrap;
 }
 
 #footerButtons {
     display: flex;
     justify-content: space-around;
-    width: 30%;
+    width: 42%;
+    margin: 10px 0;
 }
 
 .navButton {
@@ -172,6 +187,7 @@ ul {
     padding: 5px;
     border: 1px solid #a36f6f;
     border-radius: 5px;
+    margin: 0 5px;
 }
 
 .navButton:hover {
@@ -184,13 +200,32 @@ ul {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 20%;
+    width: 30%;
     visibility: hidden;
+    white-space: nowrap;
 }
 
 #clear:hover {
     cursor: pointer;
     text-decoration: underline;
+}
+
+@media screen and (min-width: 550px) {
+    #footer {
+        flex-direction: row;
+    }
+
+    #clear {
+        justify-content: flex-end;
+    }
+
+    #itemLeft {
+        justify-content: flex-start;
+    }
+
+    #footerButtons {
+        margin: 0;
+    }
 }
 
 @media screen and (min-width: 768px) {

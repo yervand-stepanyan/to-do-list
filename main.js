@@ -7,6 +7,8 @@ const clearCompleted = document.querySelector('#clear');
 const btnAll = document.querySelector('#all');
 const btnActive = document.querySelector('#active');
 const btnCompleted = document.querySelector('#completed');
+const selectAllDiv = document.querySelector('#selectAll');
+const selectAllIcon = document.querySelector('.down');
 const smallButtons = [btnAll, btnActive, btnCompleted];
 
 let listItems = [];
@@ -15,6 +17,7 @@ let completedItems = [];
 let activeItemsCount = 0;
 let isCompletedClicked = false;
 let route = "";
+let isSelectAllClicked = false;
 
 btnAdd.addEventListener("click", () => {
     addOnClickAndEnter();
@@ -45,6 +48,7 @@ clearCompleted.addEventListener("click", () => {
 
     if (listItems.length === 0) {
         clearCompleted.style.visibility = "hidden";
+
         list.style.display = "none";
 
         localStorage.clear();
@@ -54,6 +58,10 @@ clearCompleted.addEventListener("click", () => {
         route = "";
 
         input.focus();
+
+        selectAllDiv.style.visibility = "hidden";
+
+        isSelectAllClicked = false;
     }
 
     if (!isCompletedClicked) {
@@ -114,6 +122,43 @@ btnCompleted.addEventListener("click", () => {
     localStorage.setItem("route", JSON.stringify(route));
 });
 
+selectAllIcon.addEventListener("click", () => {
+    isSelectAllClicked = !isSelectAllClicked;
+
+    if (listItems.length === completedItems.length) {
+        isSelectAllClicked = false;
+    }
+
+    if (isSelectAllClicked) {
+        listItems.forEach(item => {
+            item.completed = true;
+        });
+    } else {
+        listItems.forEach(item => {
+            item.completed = false;
+        });
+    }
+
+    activeItems = listItems.filter(item => item.completed === false);
+    completedItems = listItems.filter(item => item.completed === true);
+
+    if (listItems[0].completed) {
+        activeItemsCount = 0;
+    } else {
+        activeItemsCount = listItems.length;
+    }
+
+    localStorage.setItem("listItems", JSON.stringify(listItems));
+    localStorage.setItem("activeItems", JSON.stringify(activeItems));
+    localStorage.setItem("completedItems", JSON.stringify(completedItems));
+    localStorage.setItem("activeItemsCount", JSON.stringify(activeItemsCount));
+
+    showItemsLeft(activeItemsCount, itemLeftDiv);
+
+    btnAll.click();
+
+});
+
 dataFromLocalStorage();
 
 function addOnClickAndEnter() {
@@ -138,7 +183,8 @@ function addOnClickAndEnter() {
         makeBtnActive(smallButtons, btnAll);
     }
 
-    // list.style.display = "none";
+    selectAllDiv.style.visibility = "visible";
+
 }
 
 function add() {
@@ -255,8 +301,14 @@ function createContent(item) {
                 localStorage.clear();
 
                 route = "";
+
+                selectAllDiv.style.visibility = "hidden";
+
+                isSelectAllClicked = false;
             } else {
                 list.style.display = "block";
+
+                selectAllDiv.style.visibility = "hidden";
             }
         }
 
@@ -292,6 +344,10 @@ function createContent(item) {
                 btnActive.click();
             }
 
+            if (listItems.length === completedItems.length) {
+                isSelectAllClicked = true;
+            }
+
         } else {
             listItems.find(item => item.title === text.innerText).completed = false;
             activeItems = listItems.filter(item => item.completed === false);
@@ -316,6 +372,8 @@ function createContent(item) {
             if (isCompletedClicked) {
                 btnCompleted.click();
             }
+
+            isSelectAllClicked = false;
         }
     });
 
@@ -344,6 +402,10 @@ function createContent(item) {
                 btnActive.click();
             }
 
+            if (listItems.length === completedItems.length) {
+                isSelectAllClicked = true;
+            }
+
         } else {
             listItems.find(item => item.title === text.innerText).completed = false;
             activeItems = listItems.filter(item => item.completed === false);
@@ -367,6 +429,8 @@ function createContent(item) {
             if (isCompletedClicked) {
                 btnCompleted.click();
             }
+
+            isSelectAllClicked = false;
         }
     });
 
@@ -418,11 +482,7 @@ function dataFromLocalStorage() {
         route = JSON.parse(localStorage.getItem("route"));
 
         add();
-    }
 
-    // console.log(listItems);
-    // console.log(activeItems);
-    // console.log(completedItems);
-    // console.log(activeItemsCount);
-    // console.log(isCompletedClicked);
+        selectAllDiv.style.visibility = "visible";
+    }
 }

@@ -157,6 +157,10 @@ selectAllIcon.addEventListener("click", () => {
 
     btnAll.click();
 
+    if (completedItems.length === 0) {
+        clearCompleted.style.visibility = "hidden";
+    }
+
 });
 
 dataFromLocalStorage();

@@ -148,7 +148,17 @@ ul {
     margin-left: 10px;
     cursor: pointer;
     transition: 0.5s;
-    /*user-select: none;*/
+}
+
+.changeInput{
+    font-size: 24px;
+    outline: none;
+    width: 100%;
+    border: none;
+    border: 1px solid #a36f6f;
+    border-radius: 10px;
+    margin-left: 5px;
+    padding: 1px 5px;
 }
 
 .btnClose {
@@ -219,11 +229,6 @@ ul {
     white-space: nowrap;
     align-self: flex-end;
 }
-
-/*#clear:hover {*/
-/*    !*cursor: pointer;*!*/
-/*    !*text-decoration: underline;*!*/
-/*}*/
 
 #clearSpan:hover {
     cursor: pointer;

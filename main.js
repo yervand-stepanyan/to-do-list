@@ -18,6 +18,8 @@ let activeItemsCount = 0;
 let isCompletedClicked = false;
 let route = "";
 let isSelectAllClicked = false;
+let clickCount = 0;
+let singleClickTimer;
 
 btnAdd.addEventListener("click", () => {
     addOnClickAndEnter();
@@ -212,7 +214,6 @@ function add() {
         return;
     }
 
-
     listItems.push({title: inputValue, completed: false});
     activeItems = listItems.filter(item => item.completed === false);
     activeItemsCount = activeItems.length;
@@ -319,62 +320,17 @@ function createContent(item) {
     });
 
     text.addEventListener("click", () => {
-        if (text.style.textDecoration === "") {
-            listItems.find(item => item.title === text.innerText).completed = true;
-            activeItems = listItems.filter(item => item.completed === false);
-            completedItems = listItems.filter(item => item.completed === true);
+        clickCount++;
 
-            localStorage.setItem("listItems", JSON.stringify(listItems));
-            localStorage.setItem("activeItems", JSON.stringify(activeItems));
-            localStorage.setItem("completedItems", JSON.stringify(completedItems));
-
-            if (completedItems.length > 0) {
-                clearCompleted.style.visibility = "visible";
-            }
-
-            activeItemsCount -= 1;
-
-            localStorage.setItem("activeItemsCount", JSON.stringify(activeItemsCount));
-            showItemsLeft(activeItemsCount, itemLeftDiv);
-
-            text.style.textDecoration = "line-through";
-            text.style.color = "#cccccc";
-            checkBox.checked = true;
-
-            if (route === "active") {
-                btnActive.click();
-            }
-
-            if (listItems.length === completedItems.length) {
-                isSelectAllClicked = true;
-            }
-
-        } else {
-            listItems.find(item => item.title === text.innerText).completed = false;
-            activeItems = listItems.filter(item => item.completed === false);
-            completedItems = listItems.filter(item => item.completed === true);
-
-            localStorage.setItem("listItems", JSON.stringify(listItems));
-            localStorage.setItem("activeItems", JSON.stringify(activeItems));
-            localStorage.setItem("completedItems", JSON.stringify(completedItems));
-
-            if (completedItems.length === 0) {
-                clearCompleted.style.visibility = "hidden";
-            }
-
-            activeItemsCount += 1;
-            localStorage.setItem("activeItemsCount", JSON.stringify(activeItemsCount));
-            showItemsLeft(activeItemsCount, itemLeftDiv);
-
-            text.style.textDecoration = "";
-            text.style.color = "black";
-            checkBox.checked = false;
-
-            if (isCompletedClicked) {
-                btnCompleted.click();
-            }
-
-            isSelectAllClicked = false;
+        if (clickCount === 1) {
+            singleClickTimer = setTimeout(function () {
+                clickCount = 0;
+                textSingleClick(text, checkBox);
+            }, 400);
+        } else if (clickCount === 2) {
+            clearTimeout(singleClickTimer);
+            clickCount = 0;
+            textDoubleClick(liDiv, text, buttonX);
         }
     });
 
@@ -434,10 +390,6 @@ function createContent(item) {
             isSelectAllClicked = false;
         }
     });
-
-    // text.addEventListener("dblclick", () => {
-    //     console.log(text);
-    // });
 }
 
 function createElement(tagName, classList = []) {
@@ -487,3 +439,132 @@ function dataFromLocalStorage() {
         selectAllDiv.style.visibility = "visible";
     }
 }
+
+function textSingleClick(textElement, checkboxElement) {
+    if (textElement.style.textDecoration === "") {
+        listItems.find(item => item.title === textElement.innerText).completed = true;
+        activeItems = listItems.filter(item => item.completed === false);
+        completedItems = listItems.filter(item => item.completed === true);
+
+        localStorage.setItem("listItems", JSON.stringify(listItems));
+        localStorage.setItem("activeItems", JSON.stringify(activeItems));
+        localStorage.setItem("completedItems", JSON.stringify(completedItems));
+
+        if (completedItems.length > 0) {
+            clearCompleted.style.visibility = "visible";
+        }
+
+        activeItemsCount -= 1;
+
+        localStorage.setItem("activeItemsCount", JSON.stringify(activeItemsCount));
+        showItemsLeft(activeItemsCount, itemLeftDiv);
+
+        textElement.style.textDecoration = "line-through";
+        textElement.style.color = "#cccccc";
+        checkboxElement.checked = true;
+
+        if (route === "active") {
+            btnActive.click();
+        }
+
+        if (listItems.length === completedItems.length) {
+            isSelectAllClicked = true;
+        }
+
+    } else {
+        listItems.find(item => item.title === textElement.innerText).completed = false;
+        activeItems = listItems.filter(item => item.completed === false);
+        completedItems = listItems.filter(item => item.completed === true);
+
+        localStorage.setItem("listItems", JSON.stringify(listItems));
+        localStorage.setItem("activeItems", JSON.stringify(activeItems));
+        localStorage.setItem("completedItems", JSON.stringify(completedItems));
+
+        if (completedItems.length === 0) {
+            clearCompleted.style.visibility = "hidden";
+        }
+
+        activeItemsCount += 1;
+        localStorage.setItem("activeItemsCount", JSON.stringify(activeItemsCount));
+        showItemsLeft(activeItemsCount, itemLeftDiv);
+
+        textElement.style.textDecoration = "";
+        textElement.style.color = "black";
+        checkboxElement.checked = false;
+
+        if (isCompletedClicked) {
+            btnCompleted.click();
+        }
+
+        isSelectAllClicked = false;
+    }
+}
+
+function textDoubleClick(divElement, textElement, buttonRemove) {
+    const changeInput = createElement("input", ["changeInput"]);
+    const textToChange = textElement.textContent;
+
+    changeInput.setAttribute("value", textToChange);
+    changeInput.setAttribute("placeholder", "* Can not be empty");
+
+    divElement.replaceChild(changeInput, textElement);
+
+    changeInput.focus();
+    const inpValue = changeInput.value;
+    changeInput.value = "";
+    changeInput.value = inpValue;
+
+    buttonRemove.style.visibility = "hidden";
+
+    changeInput.addEventListener("keypress", event => {
+        if (event.key === "Enter") {
+            changedValueToText(changeInput, textElement, divElement, buttonRemove, textToChange);
+        }
+    });
+
+    changeInput.addEventListener("focusout", () => {
+        changedValueToText(changeInput, textElement, divElement, buttonRemove, textToChange);
+    });
+}
+
+function changedValueToText(changeInput, textElement, divElement, buttonRemove, textToChange) {
+    const valueFromInput = changeInput.value;
+    const firstReplace = valueFromInput.replace(/\s\s+/g, ' ');
+    const wsRegex = /^\s*|\s*$/g;
+    const changedValue = firstReplace.replace(wsRegex, '');
+
+    if (changedValue === "") {
+        changeInput.focus();
+
+        changeInput.style.border = "1px solid red";
+
+    } else {
+        textElement.textContent = changedValue;
+        divElement.replaceChild(textElement, changeInput);
+
+        buttonRemove.style.visibility = "visible";
+
+        listItems.forEach(item => {
+            if (item.title === textToChange) {
+                item.title = changedValue;
+            }
+        });
+
+        activeItems.forEach(item => {
+            if (item.title === textToChange) {
+                item.title = changedValue;
+            }
+        });
+
+        completedItems.forEach(item => {
+            if (item.title === textToChange) {
+                item.title = changedValue;
+            }
+        });
+
+        localStorage.setItem("listItems", JSON.stringify(listItems));
+        localStorage.setItem("activeItems", JSON.stringify(activeItems));
+        localStorage.setItem("completedItems", JSON.stringify(completedItems));
+    }
+}
+

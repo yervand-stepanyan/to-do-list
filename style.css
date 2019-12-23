@@ -8,6 +8,7 @@ body {
     flex-direction: column;
     align-items: center;
     padding: 5px 10px;
+    user-select: none;
 }
 
 #title {
@@ -147,7 +148,7 @@ ul {
     margin-left: 10px;
     cursor: pointer;
     transition: 0.5s;
-    user-select: none;
+    /*user-select: none;*/
 }
 
 .btnClose {
@@ -219,7 +220,12 @@ ul {
     align-self: flex-end;
 }
 
-#clear:hover {
+/*#clear:hover {*/
+/*    !*cursor: pointer;*!*/
+/*    !*text-decoration: underline;*!*/
+/*}*/
+
+#clearSpan:hover {
     cursor: pointer;
     text-decoration: underline;
 }

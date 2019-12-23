@@ -3,7 +3,7 @@ const btnAdd = document.querySelector('#btnAdd');
 const list = document.querySelector('#list');
 const ul = document.querySelector('ul');
 const itemLeftDiv = document.querySelector('#itemLeft');
-const clearCompleted = document.querySelector('#clear');
+const clearCompleted = document.querySelector('#clearSpan');
 const btnAll = document.querySelector('#all');
 const btnActive = document.querySelector('#active');
 const btnCompleted = document.querySelector('#completed');
@@ -36,17 +36,14 @@ clearCompleted.addEventListener("click", () => {
     listItems = [...activeItems];
     localStorage.setItem("listItems", JSON.stringify(listItems));
 
-    if (completedItems.length === 0) {
-        clearCompleted.style.visibility = "hidden";
-        list.style.display = "none";
-
-        localStorage.clear();
-    }
-
     completedItems = [];
     localStorage.setItem("completedItems", JSON.stringify(completedItems));
 
-    if (listItems.length === 0) {
+    if (completedItems.length === 0) {
+        clearCompleted.style.visibility = "hidden";
+    }
+
+    if (listItems.length === 0 && completedItems.length === 0) {
         clearCompleted.style.visibility = "hidden";
 
         list.style.display = "none";
@@ -438,9 +435,9 @@ function createContent(item) {
         }
     });
 
-    text.addEventListener("dblclick", () => {
-        console.log(text);
-    });
+    // text.addEventListener("dblclick", () => {
+    //     console.log(text);
+    // });
 }
 
 function createElement(tagName, classList = []) {

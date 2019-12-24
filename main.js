@@ -154,7 +154,13 @@ selectAllIcon.addEventListener("click", () => {
 
     showItemsLeft(activeItemsCount, itemLeftDiv);
 
-    btnAll.click();
+    if (route === "all") {
+        btnAll.click();
+    } else if (route === "active") {
+        btnActive.click();
+    } else if (route === "completed") {
+        btnCompleted.click();
+    }
 
     if (completedItems.length === 0) {
         clearCompleted.style.visibility = "hidden";

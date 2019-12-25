@@ -524,16 +524,18 @@ function textDoubleClick(divElement, textElement, buttonRemove) {
 
     changeInput.addEventListener("keypress", event => {
         if (event.key === "Enter") {
-            changedValueToText(changeInput, textElement, divElement, buttonRemove, textToChange);
+            changeValueToText(changeInput, textElement, divElement, buttonRemove, textToChange);
         }
     });
 
     changeInput.addEventListener("focusout", () => {
-        changedValueToText(changeInput, textElement, divElement, buttonRemove, textToChange);
+        setTimeout(() => {
+            changeValueToText(changeInput, textElement, divElement, buttonRemove, textToChange);
+        });
     });
 }
 
-function changedValueToText(changeInput, textElement, divElement, buttonRemove, textToChange) {
+function changeValueToText(changeInput, textElement, divElement, buttonRemove, textToChange) {
     const valueFromInput = changeInput.value;
     const firstReplace = valueFromInput.replace(/\s\s+/g, ' ');
     const wsRegex = /^\s*|\s*$/g;
@@ -543,34 +545,38 @@ function changedValueToText(changeInput, textElement, divElement, buttonRemove, 
         changeInput.focus();
 
         changeInput.style.border = "1px solid red";
-
     } else {
-        textElement.textContent = changedValue;
-        divElement.replaceChild(textElement, changeInput);
+        let hasInput = divElement.contains(changeInput);
 
-        buttonRemove.style.visibility = "visible";
+        if (hasInput) {
+            textElement.textContent = changedValue;
+            divElement.replaceChild(textElement, changeInput);
 
-        listItems.forEach(item => {
-            if (item.title === textToChange) {
-                item.title = changedValue;
-            }
-        });
+            buttonRemove.style.visibility = "visible";
 
-        activeItems.forEach(item => {
-            if (item.title === textToChange) {
-                item.title = changedValue;
-            }
-        });
+            listItems.forEach(item => {
+                if (item.title === textToChange) {
+                    item.title = changedValue;
+                }
+            });
 
-        completedItems.forEach(item => {
-            if (item.title === textToChange) {
-                item.title = changedValue;
-            }
-        });
+            activeItems.forEach(item => {
+                if (item.title === textToChange) {
+                    item.title = changedValue;
+                }
+            });
 
-        localStorage.setItem("listItems", JSON.stringify(listItems));
-        localStorage.setItem("activeItems", JSON.stringify(activeItems));
-        localStorage.setItem("completedItems", JSON.stringify(completedItems));
+            completedItems.forEach(item => {
+                if (item.title === textToChange) {
+                    item.title = changedValue;
+                }
+            });
+
+            localStorage.setItem("listItems", JSON.stringify(listItems));
+            localStorage.setItem("activeItems", JSON.stringify(activeItems));
+            localStorage.setItem("completedItems", JSON.stringify(completedItems));
+        } else {
+            return false;
+        }
     }
 }
-

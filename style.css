@@ -88,14 +88,12 @@ body {
     margin-top: 5px;
     box-sizing: border-box;
     border-radius: 10px;
-    /*position: relative;*/
 }
 
 #selectAll {
     position: absolute;
     top: 15px;
     left: 20px;
-    cursor: pointer;
     visibility: hidden;
 }
 
@@ -104,6 +102,7 @@ i {
     border-width: 0 4px 4px 0;
     display: inline-block;
     padding: 7px;
+    cursor: pointer;
 }
 
 i:hover {
@@ -138,11 +137,65 @@ ul {
     display: block;
 }
 
-.checkBox {
-    min-width: 30px;
-    height: 30px;
+/* CheckBox start */
+
+.css-checkbox + label {
+    display: block;
+    margin: 0 10px;
     cursor: pointer;
 }
+
+input[type=checkbox] {
+    display: none;
+}
+
+/*.checkBoxNone + label {*/
+/*    display: none;*/
+/*}*/
+
+input[type=checkbox] + label:before {
+    content: "\2714";
+    border: 0.1em solid rgba(175, 47, 47, 0.15);
+    border-radius: 0.2em;
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    padding-left: 0.2em;
+    padding-bottom: 0.3em;
+    margin-right: 0.2em;
+    vertical-align: bottom;
+    color: transparent;
+    transition: .2s;
+}
+
+input[type=checkbox] + label:active:before {
+    transform: scale(0);
+}
+
+input[type=checkbox]:checked + label:before {
+    background-color: MediumSeaGreen;
+    border-color: MediumSeaGreen;
+    color: #fff;
+}
+
+input[type=checkbox]:disabled + label:before {
+    transform: scale(1);
+    border-color: #aaa;
+}
+
+input[type=checkbox]:checked:disabled + label:before {
+    transform: scale(1);
+    background-color: #bfb;
+    border-color: #bfb;
+}
+
+/* CheckBox end */
+
+/*.checkBox {*/
+/*    min-width: 30px;*/
+/*    height: 30px;*/
+/*    cursor: pointer;*/
+/*}*/
 
 .spanText {
     margin-left: 10px;

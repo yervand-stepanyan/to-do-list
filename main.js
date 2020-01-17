@@ -397,6 +397,8 @@ function createContent(item) {
 
       if (listItems.length === completedItems.length) {
         isSelectAllClicked = true;
+
+        selectAllIcon.classList.add("selectAllClicked");
       }
 
     } else {
@@ -424,6 +426,8 @@ function createContent(item) {
       }
 
       isSelectAllClicked = false;
+
+      selectAllIcon.classList.remove("selectAllClicked");
     }
   });
 }
@@ -505,6 +509,8 @@ function textSingleClick(textElement, checkboxElement) {
 
     if (listItems.length === completedItems.length) {
       isSelectAllClicked = true;
+
+      selectAllIcon.classList.add("selectAllClicked");
     }
 
   } else {
@@ -533,6 +539,8 @@ function textSingleClick(textElement, checkboxElement) {
     }
 
     isSelectAllClicked = false;
+
+    selectAllIcon.classList.remove("selectAllClicked");
   }
 }
 

@@ -67,6 +67,7 @@ body {
     font-weight: bold;
     height: 100%;
     width: 100%;
+    -webkit-tap-highlight-color: transparent;
 }
 
 #btnAdd:hover {
@@ -92,9 +93,12 @@ body {
 
 #selectAll {
     position: absolute;
-    top: 15px;
-    left: 20px;
+    left: 0;
     visibility: hidden;
+    width: 60px;
+    height: 100%;
+    text-align: center;
+    cursor: pointer;
 }
 
 .selectAllClicked {
@@ -107,10 +111,10 @@ i {
     border-width: 0 4px 4px 0;
     display: inline-block;
     padding: 7px;
-    cursor: pointer;
+    margin-top: 25%;
 }
 
-i:hover {
+#selectAll:hover > i {
     border: solid #5b0d0d;
     border-width: 0 4px 4px 0;
 }
@@ -148,20 +152,19 @@ ul {
     display: block;
     margin: 0 10px;
     cursor: pointer;
-    background: transparent;
-    box-shadow: none;
-    outline: 0 !important;
-    outline: none !important;
-    -webkit-tap-highlight-color: transparent !important;
 }
 
 input[type=checkbox] {
     display: none;
 }
 
-/*.checkBoxNone + label {*/
-/*    display: none;*/
-/*}*/
+.css-checkbox + label, .spanText, #selectAll, #clearSpan, .navButton {
+    background: transparent;
+    box-shadow: none;
+    outline: 0 !important;
+    outline: none !important;
+    -webkit-tap-highlight-color: transparent !important;
+}
 
 input[type=checkbox] + label:before {
     content: "\2714";

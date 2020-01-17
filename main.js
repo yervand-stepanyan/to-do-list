@@ -136,7 +136,7 @@ btnCompleted.addEventListener("click", () => {
   localStorage.setItem("route", JSON.stringify(route));
 });
 
-selectAllIcon.addEventListener("click", () => {
+selectAllDiv.addEventListener("click", () => {
   checkboxNum = 0;
 
   isSelectAllClicked = !isSelectAllClicked;

@@ -97,6 +97,11 @@ body {
     visibility: hidden;
 }
 
+.selectAllClicked {
+    border: solid #5b0d0d;
+    border-width: 0 4px 4px 0;
+}
+
 i {
     border: solid #b28787;
     border-width: 0 4px 4px 0;
@@ -203,7 +208,7 @@ input[type=checkbox]:checked:disabled + label:before {
     transition: 0.5s;
 }
 
-.changeInput{
+.changeInput {
     font-size: 24px;
     outline: none;
     width: 100%;

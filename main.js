@@ -146,10 +146,14 @@ selectAllIcon.addEventListener("click", () => {
     listItems.forEach(item => {
       item.completed = true;
     });
+
+    selectAllIcon.classList.add("selectAllClicked");
   } else {
     listItems.forEach(item => {
       item.completed = false;
     });
+
+    selectAllIcon.classList.remove("selectAllClicked");
   }
 
   activeItems = listItems.filter(item => item.completed === false);

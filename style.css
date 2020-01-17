@@ -148,6 +148,11 @@ ul {
     display: block;
     margin: 0 10px;
     cursor: pointer;
+    background: transparent;
+    box-shadow: none;
+    outline: 0 !important;
+    outline: none !important;
+    -webkit-tap-highlight-color: transparent !important;
 }
 
 input[type=checkbox] {

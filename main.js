@@ -21,6 +21,7 @@ let isSelectAllClicked = false;
 let clickCount = 0;
 let singleClickTimer;
 let checkboxNum = 0;
+let isItemRemoved = false;
 
 btnAdd.addEventListener("click", () => {
   addOnClickAndEnter();
@@ -580,9 +581,68 @@ function changeValueToText(changeInput, textElement, divElement, buttonRemove, t
   const changedValue = firstReplace.replace(wsRegex, '');
 
   if (changedValue === "") {
-    changeInput.focus();
+    isItemRemoved = !isItemRemoved;
 
-    changeInput.style.border = "1px solid red";
+    if (isItemRemoved) {
+      const removedValue = textElement.textContent;
+
+      const removedItem = listItems.find(item => item.title === removedValue);
+      listItems = listItems.filter(item => item.title !== removedValue);
+      activeItems = listItems.filter(item => item.completed === false);
+      completedItems = completedItems.filter(item => item.title !== removedValue);
+
+      localStorage.setItem("listItems", JSON.stringify(listItems));
+      localStorage.setItem("activeItems", JSON.stringify(activeItems));
+      localStorage.setItem("completedItems", JSON.stringify(completedItems));
+
+      if (!removedItem.completed) {
+
+        activeItemsCount -= 1;
+
+        if (activeItemsCount < 0) {
+          activeItemsCount = 0;
+        }
+
+        showItemsLeft(activeItemsCount, itemLeftDiv);
+
+        localStorage.setItem("activeItemsCount", JSON.stringify(activeItemsCount));
+
+        list.style.display = "block";
+      } else {
+        showItemsLeft(activeItemsCount, itemLeftDiv);
+      }
+
+      ul.removeChild(changeInput.closest('li'));
+
+      if (!ul.hasChildNodes()) {
+        if (activeItemsCount === 0 && listItems.length === 0) {
+          list.style.display = "none";
+
+          input.focus();
+
+          localStorage.clear();
+
+          route = "";
+
+          selectAllDiv.style.visibility = "hidden";
+
+          isSelectAllClicked = false;
+
+          checkboxNum = 0;
+        } else {
+          list.style.display = "block";
+
+          selectAllDiv.style.visibility = "hidden";
+        }
+      }
+
+      if (completedItems.length === 0) {
+        clearCompleted.style.visibility = "hidden";
+      }
+    } else {
+      return false;
+    }
+
   } else {
     let hasInput = divElement.contains(changeInput);
 

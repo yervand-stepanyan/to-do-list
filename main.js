@@ -65,6 +65,8 @@ clearCompleted.addEventListener("click", () => {
 
     isSelectAllClicked = false;
 
+    selectAllIcon.classList.remove("selectAllClicked");
+
     checkboxNum = 0;
   }
 

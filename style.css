@@ -139,7 +139,7 @@ ul {
     border-bottom: 1px solid #A9A9A9;
     padding: 5px 10px;
     position: relative;
-    word-break: break-all;
+    word-break: break-word;
 }
 
 .liDiv:hover > .btnClose {
